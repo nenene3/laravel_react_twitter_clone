@@ -23,11 +23,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: (
-          
-            <Profile />
-         
-        ),
+        element: <Profile />,
+        children:[
+          {path:'/profile/:userId', element:<Profile/>}
+        ]
       },
     ],
   },

@@ -20,7 +20,11 @@ export const apiSlice = createApi({
     getProfile: builder.query({
       query: (id) => `/profiles/${id}`, // Just return the URL string directly
     }),
+    getUser:builder.query({
+      query:(id)=>`/users/${id}`
+    }),
   }),
+  
 });
 
-export const { useGetProfileQuery } = apiSlice;
+export const { useGetProfileQuery,useGetUserQuery } = apiSlice;

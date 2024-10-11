@@ -6,7 +6,7 @@ const Root = () => {
     <div className="flex min-h-screen bg-slate-600">
       <div className=" container mx-auto flex">
         <SideBar />
-        <div className="flex-1">
+        <div className="flex-1 ml-[256px]">
             <Outlet/>
         </div>
       </div>

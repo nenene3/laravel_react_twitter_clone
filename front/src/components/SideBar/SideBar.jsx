@@ -25,7 +25,8 @@ const SideBar = () => {
     { icon: User, text: "profile", href: "/profile" },
   ];
   return (
-    <nav className=" px-4 pt-3   h-screen w-64 bg-gray-800 overflow-auto items flex flex-col  gap-4 text-white ">
+    <nav className="fixed top-0  px-4 pt-3 h-full w-64 bg-gray-800 overflow-hidden flex flex-col gap-4 text-white">
+
       {menuItems.map((e, i) => {
         const Icon = e.icon;
         return (

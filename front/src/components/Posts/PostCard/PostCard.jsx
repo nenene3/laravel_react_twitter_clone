@@ -6,9 +6,9 @@ const PostCard = ({ post }) => {
       <div className="flex gap-6">
         <img
           src={post.user.img || "https://github.com/shadcn.png"}
-          height={20}
-          width={60}
-          className=" rounded-xl"
+          height={100}
+          width={100}
+          className="  rounded-full"
         />
         <div>
           <div>

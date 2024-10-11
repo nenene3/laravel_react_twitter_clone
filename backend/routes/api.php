@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\UserController;
 use App\Models\Comment;
 use App\Models\Profile;
 use Illuminate\Database\Connectors\PostgresConnector;
@@ -26,3 +27,5 @@ Route::get('/posts',[PostController::class,'index']);
 Route::apiResource('/profiles',ProfileController::class);
 
 Route::apiResource('/comments',CommentController::class);
+
+Route::apiResource('/users',UserController::class);
