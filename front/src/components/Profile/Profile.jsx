@@ -10,20 +10,26 @@ const Profile = () => {
   const { userId } = useParams();
 
   const {
-    data: posts,
+    data: profile,
     error,
     isLoading,
     isFetching,
   } = useGetProfileQuery(userId ?? user.id);
 
-
+  useEffect(() => {
+    console.log(profile);
+  }, [profile]);
   return (
     <div className="">
-      <ProfileBanner/>
-      {!error &&
-        !isFetching &&
-        posts.map((post, i) => <PostCard post={post} key={i} />)}
-      {error && (error.data?.message || error.status )}
+      {!error && !isFetching && (
+        <>
+          <ProfileBanner profile={profile.profile} />
+          {profile.posts.map((post, i) => (
+            <PostCard post={post} key={i} />
+          ))}
+        </>
+      )}
+      {error && (error.data?.message || error.status)}
     </div>
   );
 };

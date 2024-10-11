@@ -10,7 +10,8 @@ import "./index.css";
 import Check from "./components/Check.jsx";
 import GuestOnlyRoute from "./components/RouteProtection/GuestOnlyRoute";
 import Profile from "./components/Profile";
-import PrivateRoute from "./components/RouteProtection/PrivateRoute/PrivateRoute.jsx";
+import PrivateRoute from "./components/RouteProtection/PrivateRoute";
+import EditProfile from "./components/EditProfile";
 
 const router = createBrowserRouter([
   {
@@ -19,14 +20,15 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <div className=" bg-red-700 ">asdfasdfasdfasdf</div>,
+        element: <div className=" bg-red-700 ">welcome</div>,
       },
       {
         path: "/profile",
         element: <Profile />,
-        children:[
-          {path:'/profile/:userId', element:<Profile/>}
-        ]
+        children: [
+          { path: "/profile/:userId", element: <Profile /> },
+          { path: "/profile/:userId/edit", element: <EditProfile /> },
+        ],
       },
     ],
   },

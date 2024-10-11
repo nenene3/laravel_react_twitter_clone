@@ -1,5 +1,7 @@
 import React from "react";
 import { MessageCircle, Heart, Repeat } from "lucide-react";
+import { Link } from "react-router-dom";
+
 const PostCard = ({ post }) => {
   return (
     <div className=" border-2 bg-slate-400 p-4">
@@ -13,7 +15,7 @@ const PostCard = ({ post }) => {
         <div>
           <div>
             <div className="flex gap-7">
-              <h1>{post.user.name}</h1>
+              <Link to={`/profile/${post.user.id}`}>{post.user.name}</Link>
               <h1>{new Date(post.created_at).toLocaleTimeString()}</h1>
             </div>
             <h1>{post.text}</h1>
