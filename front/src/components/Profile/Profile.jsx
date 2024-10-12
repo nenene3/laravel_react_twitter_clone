@@ -19,13 +19,16 @@ const Profile = () => {
 
   useEffect(() => {
     console.log(profile);
+    console.log(userId)
   }, [profile]);
   return (
     <div className="">
       {!error && !isFetching && (
         <>
           <ProfileBanner profile={profile.profile} />
-          <CreatePost/>
+          
+          {String(userId) ===String(user.id) && <CreatePost/> }
+           
           {profile.posts.map((post, i) => (
             <PostCard post={post} key={i} />
           ))}

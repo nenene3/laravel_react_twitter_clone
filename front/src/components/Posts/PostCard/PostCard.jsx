@@ -7,7 +7,12 @@ const PostCard = ({ post }) => {
     <div className=" border-2 bg-slate-400 p-4">
       <div className="flex gap-6">
         <img
-          src={post.user.img || "https://github.com/shadcn.png"}
+        src={
+          post.user.profile_pic
+            ? `http://localhost:8000/storage/${post.user.profile_pic}`
+            : "https://github.com/shadcn.png"
+        }
+         
           height={100}
           width={100}
           className="  rounded-full"
