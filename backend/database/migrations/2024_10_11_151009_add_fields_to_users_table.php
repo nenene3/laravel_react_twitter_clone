@@ -12,13 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::table('users')->truncate();
 
-
-        DB::table('profiles')->truncate();
-
-        Schema::table('profiles', function (Blueprint $table) {
-            $table->string('banner')->nullable();
-            
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('profile_pic')->nullable();
         });
     }
 
@@ -27,8 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('profiles', function (Blueprint $table) {
-            $table->dropColumn(['banner']);
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['profile_pic']);
         });
     }
 };

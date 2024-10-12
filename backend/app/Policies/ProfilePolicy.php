@@ -40,7 +40,7 @@ class ProfilePolicy
      */
     public function update(User $user, Profile $profile): bool
     {
-        //
+      
         return $user->id === $profile->user_id;
     }
 

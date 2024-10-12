@@ -7,12 +7,21 @@ use Illuminate\Support\Facades\Gate;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Storage;
 
-class ProfileController extends Controller
+
+class ProfileController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public static function  Middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', except: ['index', 'show'])
+        ];
+    }
+
     public function index() {}
 
     /**
@@ -20,7 +29,9 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        return $data;
     }
 
     /**
@@ -33,7 +44,7 @@ class ProfileController extends Controller
 
         // Load the user relationship for the profile
         $profile->load('user');
-        
+
         return [
             "posts" => $posts,
             "profile" => $profile
@@ -46,17 +57,42 @@ class ProfileController extends Controller
      */
     public function update(Request $request, Profile $profile)
     {
+        
+        Gate::authorize('update', $profile);
+
+
+        
         $fields = $request->validate([
-            'name' => 'required|max:255',
-            'banner'=>'nullable|image',
-            'profile_pic'=>'nullable|image',
+            'banner' => 'required|file|mimes:jpeg,png,jpg,gif,pdf|max:2048',
+            'profile_pic' => 'required|file|mimes:jpeg,png,jpg,gif,pdf|max:2048',
         ]);
-        Gate::authorize('modify', $profile);
 
-        $profile->update($fields);
+        
+        if ($request->hasFile('banner')) {
+            $path = $request->file('banner')->store('banners', 'public');
+            $profile->banner = $path;
+            $profile->save();
+            
+        }
 
-        return ['post' => $profile, 'user' => $profile->user];
+        // Handle profile picture upload
+        if ($request->hasFile('profile_pic')) {
+            $path = $request->file('profile_pic')->store('profile_pics', 'public');
+            $user = $request->user();
+            $user->profile_pic = $path;
+            $user->save();
+          
+        }
+
+        // Ensure the profile relationship with the user is loaded
+        $profile->load('user');
+
+        // Return the updated profile and the associated user
+        // return ['profile' => $profile, 'user' => $profile->user];
+        $data= $request->all();
+        return $data;
     }
+
 
     /**
      * Remove the specified resource from storage.

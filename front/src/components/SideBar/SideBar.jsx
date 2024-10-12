@@ -21,8 +21,8 @@ const SideBar = () => {
     { icon: Bell, text: "notifications", href: "/notifications" },
     { icon: Mail, text: "Messages", href: "/Messages" },
     { icon: Bookmark, text: "Bookmarks", href: "/Bookmark" },
-    { icon: HomeIcon, text: "Home", href: "/as" },
-    { icon: User, text: "profile", href: "/profile" },
+    { icon: HomeIcon, text: "settings", href: "/settings" },
+    { icon: User, text: "profile", href: `/profile/${user.id}` },
   ];
   return (
     <nav className="fixed top-0  px-4 pt-3 h-full w-64 bg-gray-800 overflow-hidden flex flex-col gap-4 text-white">
