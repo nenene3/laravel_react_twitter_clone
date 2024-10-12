@@ -5,6 +5,7 @@ import Button from "../Button";
 import PostCard from "../Posts/PostCard";
 import { useParams } from "react-router-dom";
 import ProfileBanner from "../ProfileBanner";
+import CreatePost from "../CreatePost/CreatePost";
 const Profile = () => {
   const user = useSelector((state) => state.auth.user);
   const { userId } = useParams();
@@ -24,6 +25,7 @@ const Profile = () => {
       {!error && !isFetching && (
         <>
           <ProfileBanner profile={profile.profile} />
+          <CreatePost/>
           {profile.posts.map((post, i) => (
             <PostCard post={post} key={i} />
           ))}

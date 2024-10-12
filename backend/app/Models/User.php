@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable,HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_pic'
     ];
 
     /**
@@ -31,7 +32,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'profile_pic'
     ];
 
     /**
@@ -47,16 +47,18 @@ class User extends Authenticatable
         ];
     }
 
-    public function profile(){
+    public function profile()
+    {
         return $this->hasOne(Profile::class);
     }
 
-    public function posts(){
+    public function posts()
+    {
         return $this->hasMany(Post::class);
     }
 
-    public function comments(){
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
     }
-    
 }
