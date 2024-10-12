@@ -69,6 +69,10 @@ class ProfileController extends Controller implements HasMiddleware
 
         
         if ($request->hasFile('banner')) {
+            if($profile->banner){
+                Storage::disk('public')->delete($profile->banner);
+            }
+
             $path = $request->file('banner')->store('banners', 'public');
             $profile->banner = $path;
             $profile->save();
@@ -77,20 +81,25 @@ class ProfileController extends Controller implements HasMiddleware
 
         // Handle profile picture upload
         if ($request->hasFile('profile_pic')) {
-            $path = $request->file('profile_pic')->store('profile_pics', 'public');
             $user = $request->user();
+            
+            if ($user->profile_pic) {
+                
+                Storage::disk('public')->delete($user->profile_pic);
+            }
+            
+            $path = $request->file('profile_pic')->store('profile_pics', 'public');
             $user->profile_pic = $path;
             $user->save();
-          
         }
+        
 
-        // Ensure the profile relationship with the user is loaded
+        
         $profile->load('user');
 
-        // Return the updated profile and the associated user
-        // return ['profile' => $profile, 'user' => $profile->user];
-        $data= $request->all();
-        return $data;
+        
+        return ['profile' => $profile, 'user' => $profile->user];
+        
     }
 
 
