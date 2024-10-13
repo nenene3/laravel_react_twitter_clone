@@ -3,7 +3,7 @@ import Button from "../Button";
 import { Search } from "lucide-react";
 
 const ProfileBanner = ({ profile }) => {
-  console.log(profile);
+  // console.log(profile);
   return (
     <div className=" w-full  ">
       <>

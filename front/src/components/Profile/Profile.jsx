@@ -19,7 +19,6 @@ const Profile = () => {
 
   useEffect(() => {
     console.log(profile);
-    console.log(userId)
   }, [profile]);
   return (
     <div className="">

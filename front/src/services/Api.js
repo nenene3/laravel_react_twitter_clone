@@ -16,15 +16,29 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Post", "User", "Posts"],
   endpoints: (builder) => ({
     getProfile: builder.query({
-      query: (id) => `/profiles/${id}`, // Just return the URL string directly
+      query: (id) => `/profiles/${id}`, 
+      providesTags: (result) => {
+        const arr = result.posts.map((e) => ({ type: "Post", id: e.id }));
+        arr.push({ type: "Posts", id: "LIST" });
+        return arr;
+      },
     }),
-    getUser:builder.query({
-      query:(id)=>`/users/${id}`
+    getUser: builder.query({
+      query: (id) => `/users/${id}`,
+    }),
+    createPost: builder.mutation({
+      query: (text) => ({
+        url: "/posts",
+        method: "POST",
+        body: JSON.stringify(text),
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: "Posts", id: "LIST" }],
     }),
   }),
-  
 });
 
-export const { useGetProfileQuery,useGetUserQuery } = apiSlice;
+export const { useGetProfileQuery, useGetUserQuery, useCreatePostMutation } =
+  apiSlice;

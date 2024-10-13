@@ -10,19 +10,19 @@ use Illuminate\Routing\Controllers\Middleware;
 
 class PostController extends Controller implements HasMiddleware
 {
-    
+
     public static function middleware()
     {
         return [
-            new Middleware('auth:sanctum',except:['index','show'])
+            new Middleware('auth:sanctum', except: ['index', 'show'])
         ];
     }
 
 
     public function index()
     {
-        $posts= Post::with('user')->get();
-        return ["post"=>$posts];
+        $posts = Post::with('user')->get();
+        return ["post" => $posts];
     }
 
     /**
@@ -30,7 +30,17 @@ class PostController extends Controller implements HasMiddleware
      */
     public function store(Request $request)
     {
-        //
+      $validateData =  $request->validate([
+            "text" => ['required', 'string', 'max:255'],
+        ]);
+        $post = new Post($validateData);
+        $user = $request->user();
+        $user->posts()->save($post);
+        $profile = $user->profile;
+        $profile->posts()->save($post);
+        
+        return ["message" => 'post created successfully', "post" => $post];
+        // return $request->all();
     }
 
     /**

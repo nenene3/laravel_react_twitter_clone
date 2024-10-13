@@ -24,8 +24,7 @@ Route::post('/',function(){
 Route::post('/register',[RegisterController::class,'register']);
 Route::post('/login',[LoginController::class,'Login']);
 
-Route::get('/posts',[PostController::class,'index']);
-
+Route::apiResource('/posts',PostController::class);
 Route::apiResource('/profiles',ProfileController::class);
 
 Route::apiResource('/comments',CommentController::class);

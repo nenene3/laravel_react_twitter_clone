@@ -40,7 +40,7 @@ class ProfileController extends Controller implements HasMiddleware
     public function show(Profile $profile)
     {
         // Load posts with the user and also load the user for the profile
-        $posts = $profile->posts()->with('user')->get();
+        $posts = $profile->posts()->with('user')->orderByDesc('created_at')->get();
 
         // Load the user relationship for the profile
         $profile->load('user');
