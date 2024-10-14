@@ -16,7 +16,7 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Post", "User", "Posts"],
+  tagTypes: ["Post", "User", "Posts",'bookmarks'],
   endpoints: (builder) => ({
     getProfile: builder.query({
       query: (id) => `/profiles/${id}`,
@@ -37,12 +37,24 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Posts", id: "LIST" }],
     }),
+    getBooksMarks: builder.query({
+      query: () => ({
+        url: "/getBooksMarks",
+        method: "GET",
+      }),
+      providesTags: (result) => {
+        const arr = result.map((e) => ({ type: "bookmarks", id: e.id }));
+        arr.push({ type: "bookmarks", id: "LIST" });
+        return arr;
+      },
+    }),
     addBookMark: builder.mutation({
       query: (id) => ({
         url: "/bookmarks",
         method: "POST",
         body: JSON.stringify({ post_id: id }),
       }),
+      invalidatesTags:()=>[{type:'bookmarks',id: "LIST"}],
     }),
   }),
 });
@@ -52,4 +64,5 @@ export const {
   useGetUserQuery,
   useCreatePostMutation,
   useAddBookMarkMutation,
+  useGetBooksMarksQuery,
 } = apiSlice;

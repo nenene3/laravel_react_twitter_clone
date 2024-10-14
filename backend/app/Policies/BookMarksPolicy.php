@@ -31,7 +31,9 @@ class BookMarksPolicy
      */
     public function create(User $user): bool
     {
+        
         return true;
+
     }
 
     /**

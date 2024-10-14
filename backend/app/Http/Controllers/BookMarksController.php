@@ -7,6 +7,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Gate;
 
 class BookMarksController extends Controller implements HasMiddleware
 {
@@ -37,6 +38,16 @@ class BookMarksController extends Controller implements HasMiddleware
         $validateData = $request->validate([
             "post_id"=>['required','exists:posts,id'],
         ]);
+
+        $hasPost = $user->bookmarks()->where('post_id', $validateData['post_id'])->exists();
+        if($hasPost){
+            return ["erorrs"=>[
+                "post_id"=>"you already bookmarked it",
+            ]
+        ];
+        }
+
+
         // $post = Post::find($request->post_id);
         $user->bookmarks()->attach($request->post_id);
 
@@ -48,8 +59,7 @@ class BookMarksController extends Controller implements HasMiddleware
      */
     public function show(BookMarks $bookMarks)
     {
-        //
-        return 'show';
+        return $bookMarks;
     }
 
     /**
@@ -69,4 +79,10 @@ class BookMarksController extends Controller implements HasMiddleware
         //
         return 'destroy';
     }
+    public function getBookMarks(Request $request){
+        $user = $request->user();
+        $bookMarks = $user->bookmarks()->orderByDesc('book_marks.created_at')->with('user')->get();
+        return $bookMarks;
+    }
+    
 }

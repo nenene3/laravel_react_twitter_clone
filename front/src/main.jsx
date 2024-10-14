@@ -10,8 +10,9 @@ import "./index.css";
 import Check from "./components/Check.jsx";
 import GuestOnlyRoute from "./components/RouteProtection/GuestOnlyRoute";
 import Profile from "./components/Profile";
-import PrivateRoute from "./components/RouteProtection/PrivateRoute/PrivateRoute.jsx";
-import EditProfile from "./components/EditProfile/EditProfile.jsx";
+import PrivateRoute from "./components/RouteProtection/PrivateRoute";
+import EditProfile from "./components/EditProfile";
+import BookMarks from "./components/BookMarks";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <PrivateRoute/>,
         children: [{ path: "/profile/:userId", element: <Profile /> }],
+      },
+      {
+        path:'/Bookmark',
+        element:<BookMarks/>
       },
 
       {

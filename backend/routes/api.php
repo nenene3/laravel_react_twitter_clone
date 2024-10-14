@@ -20,9 +20,8 @@ Route::get('/user', function (Request $request) {
     return $user;
 })->middleware('auth:sanctum');
 
-Route::post('/',function(){
-    return 'hihihihihihihi';
-});
+
+
 Route::post('/register',[RegisterController::class,'register']);
 Route::post('/login',[LoginController::class,'Login']);
 
@@ -33,3 +32,4 @@ Route::apiResource('/comments',CommentController::class);
 
 Route::apiResource('/users',UserController::class);
 Route::apiResource('/bookmarks',BookMarksController::class);
+Route::get('/getBooksMarks',[BookMarksController::class,'getBookMarks']);

@@ -36,7 +36,7 @@ const PostCard = ({ post }) => {
             <h1>{post.text}</h1>
           </div>
           <div className=" flex">
-            <MessageCircle />
+            <MessageCircle />{post.comments_count || 0}
             <Heart />
             <Repeat />
             <Bookmark onClick={handleBookMark}/>
