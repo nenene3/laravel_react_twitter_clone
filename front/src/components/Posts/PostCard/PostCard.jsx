@@ -1,18 +1,28 @@
 import React from "react";
-import { MessageCircle, Heart, Repeat } from "lucide-react";
+import { MessageCircle, Heart, Repeat,Bookmark } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAddBookMarkMutation } from "../../../services/Api";
 
 const PostCard = ({ post }) => {
+  const [addBookMark] = useAddBookMarkMutation();
+  const handleBookMark = async () => {
+    try {
+      const res = await addBookMark(post.id).unwrap();
+      console.log(res)
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <div className=" border-2 bg-slate-400 p-4">
       <div className="flex gap-6">
         <img
-        src={
-          post.user.profile_pic
-            ? `http://localhost:8000/storage/${post.user.profile_pic}`
-            : "https://github.com/shadcn.png"
-        }
-         
+          src={
+            post.user.profile_pic
+              ? `http://localhost:8000/storage/${post.user.profile_pic}`
+              : "https://github.com/shadcn.png"
+          }
           height={100}
           width={100}
           className="  rounded-full"
@@ -29,6 +39,7 @@ const PostCard = ({ post }) => {
             <MessageCircle />
             <Heart />
             <Repeat />
+            <Bookmark onClick={handleBookMark}/>
           </div>
         </div>
       </div>

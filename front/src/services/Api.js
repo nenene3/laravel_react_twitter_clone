@@ -19,7 +19,7 @@ export const apiSlice = createApi({
   tagTypes: ["Post", "User", "Posts"],
   endpoints: (builder) => ({
     getProfile: builder.query({
-      query: (id) => `/profiles/${id}`, 
+      query: (id) => `/profiles/${id}`,
       providesTags: (result) => {
         const arr = result.posts.map((e) => ({ type: "Post", id: e.id }));
         arr.push({ type: "Posts", id: "LIST" });
@@ -37,8 +37,19 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Posts", id: "LIST" }],
     }),
+    addBookMark: builder.mutation({
+      query: (id) => ({
+        url: "/bookmarks",
+        method: "POST",
+        body: JSON.stringify({ post_id: id }),
+      }),
+    }),
   }),
 });
 
-export const { useGetProfileQuery, useGetUserQuery, useCreatePostMutation } =
-  apiSlice;
+export const {
+  useGetProfileQuery,
+  useGetUserQuery,
+  useCreatePostMutation,
+  useAddBookMarkMutation,
+} = apiSlice;
